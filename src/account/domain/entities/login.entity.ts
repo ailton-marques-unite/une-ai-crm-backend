@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
 import { Usuario } from './usuario.entity';
 
-@Entity('security.tbl_Login')
+@Entity({ schema: 'security', name: 'tbl_Login' })
 export class Login {
   @PrimaryGeneratedColumn({ name: 'Id_Login' })
   idLogin: number;

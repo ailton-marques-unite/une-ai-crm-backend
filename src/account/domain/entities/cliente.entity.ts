@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColum
 import { Empresa } from './empresa.entity';
 import { Usuario } from './usuario.entity';
 
-@Entity('global.tbl_Cliente')
+@Entity({ schema: 'global', name: 'tbl_Cliente' })
 export class Cliente {
   @PrimaryGeneratedColumn({ name: 'Id_Cliente' })
   idCliente: number;

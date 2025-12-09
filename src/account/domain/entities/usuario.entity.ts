@@ -4,7 +4,7 @@ import { Cliente } from './cliente.entity';
 import { Cargo } from './cargo.entity';
 import { Departamento } from './departamento.entity';
 
-@Entity('security.tbl_Usuario')
+@Entity({ schema: 'security', name: 'tbl_Usuario' })
 export class Usuario {
   @PrimaryGeneratedColumn({ name: 'Id_Usuario' })
   idUsuario: number;

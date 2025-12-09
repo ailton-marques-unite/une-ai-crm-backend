@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Cliente } from './cliente.entity';
 
-@Entity('global.tbl_Empresa')
+@Entity({ schema: 'global', name: 'tbl_Empresa' })
 export class Empresa {
   @PrimaryGeneratedColumn({ name: 'Id_Empresa' })
   idEmpresa: number;

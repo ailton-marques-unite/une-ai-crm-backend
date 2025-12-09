@@ -12,8 +12,12 @@ const config = new DocumentBuilder()
     .addTag('Api services') // Optional: Add tags for categorization
     .build();
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document); // 'api' is the URL path for your Swagger UI
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('api', app, document, {
+      swaggerOptions: {
+        defaultModelsExpandDepth: -1,
+      },
+    });
 
   await app.listen(process.env.PORT ?? 3000);
 }

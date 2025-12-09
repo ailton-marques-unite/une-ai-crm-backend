@@ -8,7 +8,7 @@ export default {
     password: 'p@ssw0rd',
     database: 'CRM',
     entities: ["dist/**/*.entity{.ts,.js}"],
-    synchronize: true,
+    synchronize: false,
     pool: {
         max: 10,
         min: 0,

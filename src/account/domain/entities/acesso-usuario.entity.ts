@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 't
 import { Usuario } from './usuario.entity';
 import { Cliente } from './cliente.entity';
 
-@Entity('Logapp.tbl_AcessoUsuario')
+@Entity({ schema: 'Logapp', name: 'tbl_AcessoUsuario' })
 export class AcessoUsuario {
   @PrimaryGeneratedColumn({ name: 'Id_AcessoUsuario' })
   idAcessoUsuario: number;

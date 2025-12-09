@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('security.tbl_GrupoAcessoUsuario')
+@Entity({ schema: 'security', name: 'tbl_GrupoAcessoUsuario' })
 export class GrupoAcessoUsuario {
   @PrimaryGeneratedColumn({ name: 'Id_GrupoAcessoUsuario' })
   idGrupoAcessoUsuario: number;

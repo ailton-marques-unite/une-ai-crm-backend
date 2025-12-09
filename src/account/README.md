@@ -870,30 +870,3 @@ const queryBuilder = this.loginRepository
 
 Os arquivos estão em `typeorm-example/` e podem ser adaptados ao seu projeto NestJS.
 
-### Cálculo de custos
-
-NAccount.cs (30 métodos)
-
-Método CarregarDadosUsuarioValidacao() exemplo -> 00:03:00
-- criação da estrutura de pastas dto, entities, services
-- criação dos objetos dto, entity envolvidas e services
-- criação do module (referência) chamada ao object.service
-
-Extrapolando para 30 métodos:
-00:03:00 * 30 = 01:30:00
-
-Extrapolando para 78 objetos de Negocio + 12 objetos de Negocio/Chat, Negocio/ClickToCall, Negocio/FAQ
-
-| 01:30:00 * 90 | = | 15:00:00 |
-|---------|---|-------------|
-| | | 15:00:00 |
-| | | 15:00:00 |
-| | | 15:00:00 |
-| | | 15:00:00 |
-| | | 15:00:00 |
-| | | 15:00:00 |
-| | | 15:00:00 |
-| | | 15:00:00 |
-| | | 15:00:00 |
-|||===========|
-| | |  135:00:00 * (0,67) = 90:27:00

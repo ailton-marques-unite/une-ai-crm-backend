@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('global.tbl_Departamento')
+@Entity({ schema: 'global', name: 'tbl_Departamento' })
 export class Departamento {
   @PrimaryGeneratedColumn({ name: 'Id_Departamento' })
   idDepartamento: number;

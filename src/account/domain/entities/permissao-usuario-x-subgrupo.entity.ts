@@ -3,7 +3,7 @@ import { Usuario } from './usuario.entity';
 import { GrupoAcessoUsuario } from './grupo-acesso-usuario.entity';
 import { SubGrupo } from './subgrupo.entity';
 
-@Entity('security.tbl_PermissaoUsuarioXSubGrupo')
+@Entity({ schema: 'security', name: 'tbl_PermissaoUsuarioXSubGrupo' })
 export class PermissaoUsuarioXSubGrupo {
   @PrimaryGeneratedColumn({ name: 'Id_PermissaoUsuarioXSubGrupo' })
   idPermissaoUsuarioXSubGrupo: number;

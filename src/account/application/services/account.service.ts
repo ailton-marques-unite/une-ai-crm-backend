@@ -31,6 +31,11 @@ import { ClienteDto } from '../../application/dtos/cliente.dto';
 import { IntervaloControleHorarioDto } from '../../application/dtos/intervalo-controle-horario.dto';
 import { SaidaIntervaloControleHorarioDto } from '../../application/dtos/saida-intervalo-controle-horario.dto';
 import { PausaControleHorarioDto } from '../../application/dtos/pausa-controle-horario.dto';
+import { UsuarioControle } from 'src/account/domain/entities/usuario-controle.entity';
+import { UsuarioXPermissao } from 'src/account/domain/entities/usuario-x-permissao.entity';
+import { Cargo } from 'src/account/domain/entities/cargo.entity';
+import { Departamento } from 'src/account/domain/entities/departamento.entity';
+import { Empresa } from 'src/account/domain/entities/empresa.entity';
 
 @Injectable()
 export class AccountService {
@@ -219,16 +224,16 @@ export class AccountService {
   async carregarDadosUsuario(usuario: number): Promise<UsuarioDto | null> {
     const queryBuilder = this.usuarioRepository
       .createQueryBuilder('U')
-      .innerJoin('security.tbl_Login', 'L', 'U.Id_Usuario = L.Id_Usuario')
-      .leftJoin('security.tbl_UsuarioControle', 'UC', 'U.Id_Usuario = UC.id_Usuario')
-      .innerJoin('security.tbl_UsuarioXPermissao', 'P', 'U.Id_Usuario = P.Id_Usuario')
-      .innerJoin('global.tbl_Cargo', 'C', 'U.Id_Cargo = C.Id_Cargo')
-      .innerJoin('global.tbl_Departamento', 'D', 'U.Id_Departamento = D.Id_Departamento')
-      .innerJoin('security.tbl_PermissaoUsuarioXSubGrupo', 'G', 'U.Id_Usuario = G.Id_Usuario')
-      .innerJoin('security.tbl_GrupoAcessoUsuario', 'O', 'G.Id_GrupoAcessoUsuario = O.Id_GrupoAcessoUsuario')
-      .innerJoin('global.tbl_Cliente', 'CL', 'U.Id_Cliente = CL.Id_Cliente')
-      .innerJoin('global.tbl_Empresa', 'E', 'CL.Id_Empresa = E.Id_Empresa')
-      .leftJoin('Logapp.tbl_AcessoUsuario', 'AC', 'U.Id_Usuario = AC.Id_Usuario')
+      .innerJoin(Login, 'L', 'U.Id_Usuario = L.Id_Usuario')
+      .leftJoin(UsuarioControle, 'UC', 'U.Id_Usuario = UC.id_Usuario')
+      .innerJoin(UsuarioXPermissao, 'P', 'U.Id_Usuario = P.Id_Usuario')
+      .innerJoin(Cargo, 'C', 'U.Id_Cargo = C.Id_Cargo')
+      .innerJoin(Departamento, 'D', 'U.Id_Departamento = D.Id_Departamento')
+      .innerJoin(PermissaoUsuarioXSubGrupo, 'G', 'U.Id_Usuario = G.Id_Usuario')
+      .innerJoin(GrupoAcessoUsuario, 'O', 'G.Id_GrupoAcessoUsuario = O.Id_GrupoAcessoUsuario')
+      .innerJoin(Cliente, 'CL', 'U.Id_Cliente = CL.Id_Cliente')
+      .innerJoin(Empresa, 'E', 'CL.Id_Empresa = E.Id_Empresa')
+      .leftJoin(AcessoUsuario, 'AC', 'U.Id_Usuario = AC.Id_Usuario')
       .select([
         'CL.Id_Empresa as id_Empresa',
         'CL.Id_Cliente as id_Cliente',
@@ -403,15 +408,15 @@ export class AccountService {
     try {
       const queryBuilder = this.loginRepository
         .createQueryBuilder()
-        .update('security.tbl_Login')
+        .update(Login)
         .where('Id_Usuario = :usuario', { usuario });
 
       if (erro === true) {
         // Incrementa nu_Erro_Senha em 1
-        queryBuilder.set({ nu_Erro_Senha: () => 'nu_Erro_Senha + 1' });
+        queryBuilder.set({ nuErroSenha: () => 'nuErroSenha + 1' });
       } else {
         // Define nu_Erro_Senha como 0
-        queryBuilder.set({ nu_Erro_Senha: 0 });
+        queryBuilder.set({ nuErroSenha: 0 });
       }
 
       const result = await queryBuilder.execute();
@@ -1027,34 +1032,33 @@ export class AccountService {
     try {
       // Subquery para filtrar módulos do cliente
       const subquery = this.dataSource
-        .createQueryBuilder()
-        .select('MXC.Id_Modulo', 'Id_Modulo')
-        .from('global.tbl_ModuloXCliente', 'MXC')
-        .where('MXC.Id_Cliente = :cliente', { cliente });
+        .createQueryBuilder(ModuloXCliente, 'MXC')
+        .select('MXC.idModulo', 'idModulo')
+        .where('MXC.idCliente = :cliente', { cliente });
 
       const queryBuilder = this.permissaoUsuarioXSubGrupoRepository
         .createQueryBuilder('A')
-        .innerJoin('global.tbl_SubGrupo', 'S', 'A.Id_SubGrupo = S.Id_SubGrupo')
-        .innerJoin('global.tbl_Grupo', 'G', 'S.Id_Grupo = G.Id_Grupo')
-        .innerJoin('global.tbl_Modulo', 'M', 'G.Id_Modulo = M.Id_Modulo')
+        .innerJoin(SubGrupo, 'S', 'A.idSubGrupo = S.idSubGrupo')
+        .innerJoin(Grupo, 'G', 'S.idGrupo = G.idGrupo')
+        .innerJoin(Modulo, 'M', 'G.idModulo = M.idModulo')
         .innerJoin(
           `(${subquery.getQuery()})`,
           'C',
-          'G.Id_Modulo = C.Id_Modulo',
+          'G.idModulo = C.idModulo',
         )
-        .innerJoin('security.tbl_GrupoAcessoUsuario', 'P', 'A.Id_GrupoAcessoUsuario = P.Id_GrupoAcessoUsuario')
+        .innerJoin(GrupoAcessoUsuario, 'P', 'A.idGrupoAcessoUsuario = P.idGrupoAcessoUsuario')
         .select([
-          'A.Id_Usuario as id_Usuario',
-          'G.Id_Modulo as id_Modulo',
-          'M.ds_Modulo as ds_Modulo',
-          'M.ic_Modulo as ic_Modulo',
+          'A.idUsuario as id_Usuario',
+          'G.idModulo as id_Modulo',
+          'M.dsModulo as ds_Modulo',
+          'M.icModulo as ic_Modulo',
         ])
-        .where('A.Id_Usuario = :usuario', { usuario })
-        .andWhere('M.fl_Excluiu = :flExcluiuModulo', { flExcluiuModulo: 'N' })
-        .andWhere('G.fl_Excluiu = :flExcluiuGrupo', { flExcluiuGrupo: 'N' })
-        .andWhere('S.fl_Excluiu = :flExcluiuSubGrupo', { flExcluiuSubGrupo: 'N' })
-        .groupBy('A.Id_Usuario, G.Id_Modulo, M.ds_Modulo, M.ic_Modulo')
-        .orderBy('M.ds_Modulo', 'ASC');
+        .where('A.idUsuario = :usuario', { usuario })
+        .andWhere('M.flExcluiu = :flExcluiuModulo', { flExcluiuModulo: 'N' })
+        .andWhere('G.flExcluiu = :flExcluiuGrupo', { flExcluiuGrupo: 'N' })
+        .andWhere('S.flExcluiu = :flExcluiuSubGrupo', { flExcluiuSubGrupo: 'N' })
+        .groupBy('A.idUsuario, G.idModulo, M.dsModulo, M.icModulo')
+        .orderBy('M.dsModulo', 'ASC');
 
       // Adiciona os parâmetros da subquery
       queryBuilder.setParameters(subquery.getParameters());

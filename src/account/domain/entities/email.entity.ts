@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('admin.tbl_Email')
+@Entity({ schema: 'admin', name: 'tbl_Email' })
 export class Email {
   @PrimaryGeneratedColumn({ name: 'id_Email' })
   idEmail: number;

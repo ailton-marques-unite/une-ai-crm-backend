@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AccountService } from '../application/services/account.service';
 import { Login } from '../domain/entities/login.entity';
@@ -23,9 +24,12 @@ import { SubGrupo } from '../domain/entities/subgrupo.entity';
 import { Grupo } from '../domain/entities/grupo.entity';
 import { Modulo } from '../domain/entities/modulo.entity';
 import { ModuloXCliente } from '../domain/entities/modulo-x-cliente.entity';
+import { AccountRepository } from './repositories/account.repository';
+import { AccountController } from './controllers/account.controller';
 
 @Module({
   imports: [
+    HttpModule,
     TypeOrmModule.forFeature([
       Login,
       Usuario,
@@ -51,8 +55,9 @@ import { ModuloXCliente } from '../domain/entities/modulo-x-cliente.entity';
       ModuloXCliente,
     ]),
   ],
-  providers: [AccountService],
-  exports: [AccountService],
+  providers: [AccountService, AccountRepository],
+  controllers: [AccountController],
+  exports: [AccountService, AccountRepository],
 })
 export class AccountModule {}
 

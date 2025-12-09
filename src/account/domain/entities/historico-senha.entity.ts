@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Usuario } from './usuario.entity';
 
-@Entity('security.tbl_HistoricoSenha')
+@Entity({ schema: 'security', name: 'tbl_HistoricoSenha' })
 export class HistoricoSenha {
   @PrimaryGeneratedColumn({ name: 'id_Senha' })
   idSenha: number;

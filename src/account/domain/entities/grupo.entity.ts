@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Modulo } from './modulo.entity';
 
-@Entity('global.tbl_Grupo')
+@Entity({ schema: 'global', name: 'tbl_Grupo' })
 export class Grupo {
   @PrimaryGeneratedColumn({ name: 'Id_Grupo' })
   idGrupo: number;
