@@ -1,0 +1,36 @@
+@startuml user-service-c4
+
+title C4 Context & Container Diagram - CRM Backend Service (NestJS)
+
+rectangle "CRM Backend" as crm_backend {
+  component "API Gateway" as api_gateway
+  component "CRM Backend Service\n(NestJS)" as crm_backend_service
+  component "Database" as db
+}
+crm_backend -down-> api_gateway : HTTP\nRequest
+api_gateway -down-> crm_backend_service : REST API Service
+crm_backend_service -down-> db : ORM/SQL
+
+package "Domains" {
+  component "Assistants" as assistants
+  component "Squad" as squad
+  component "Calls" as calls
+  component "Chats" as chats
+  component "Campaigns" as campaigns
+  component "Sessions" as sessions
+  component "Phone Numbers" as phone_numbers
+  component "Tools" as tools
+  component "Structured Outputs" as structured_outputs
+}
+
+crm_backend_service -down-> assistants
+crm_backend_service -down-> squad
+crm_backend_service -down-> calls
+crm_backend_service -down-> chats
+crm_backend_service -down-> campaigns
+crm_backend_service -down-> sessions
+crm_backend_service -down-> phone_numbers
+crm_backend_service -down-> tools
+crm_backend_service -down-> structured_outputs
+
+@enduml
