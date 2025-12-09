@@ -2,10 +2,10 @@ import { ConnectionOptions } from 'typeorm';
 
 export default {
     type: 'mssql',
-    host: '201.54.16.83',
+    host: 'localhost',
     port: 1433,
-    username: 'userapp_crm',
-    password: '6Yd785VOGvaSbB9',
+    username: 'user_crm',
+    password: 'p@ssw0rd',
     database: 'CRM',
     entities: ["dist/**/*.entity{.ts,.js}"],
     synchronize: true,
