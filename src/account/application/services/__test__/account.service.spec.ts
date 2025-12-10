@@ -1,20 +1,20 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AccountService } from './account.service';
+import { AccountService } from '../account.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
-import { Login } from '../../domain/entities/login.entity';
-import { Usuario } from '../../domain/entities/usuario.entity';
-import { Cliente } from '../../domain/entities/cliente.entity';
-import { UsuarioAutenticacao } from '../../domain/entities/usuario-autenticacao.entity';
-import { Email } from '../../domain/entities/email.entity';
-import { HistoricoSenha } from '../../domain/entities/historico-senha.entity';
-import { AcessoUsuarioCelular } from '../../domain/entities/acesso-usuario-celular.entity';
-import { AcessoUsuario } from '../../domain/entities/acesso-usuario.entity';
-import { UsuarioAcesso } from '../../domain/entities/usuario-acesso.entity';
-import { UsuarioPausa } from '../../domain/entities/usuario-pausa.entity';
-import { UsuarioMultiAcesso } from '../../domain/entities/usuario-multi-acesso.entity';
-import { PermissaoUsuarioXSubGrupo } from '../../domain/entities/permissao-usuario-x-subgrupo.entity';
-import { GrupoAcessoUsuario } from '../../domain/entities/grupo-acesso-usuario.entity';
+import { Login } from '../../../domain/entities/login.entity';
+import { Usuario } from '../../../domain/entities/usuario.entity';
+import { Cliente } from '../../../domain/entities/cliente.entity';
+import { UsuarioAutenticacao } from '../../../domain/entities/usuario-autenticacao.entity';
+import { Email } from '../../../domain/entities/email.entity';
+import { HistoricoSenha } from '../../../domain/entities/historico-senha.entity';
+import { AcessoUsuarioCelular } from '../../../domain/entities/acesso-usuario-celular.entity';
+import { AcessoUsuario } from '../../../domain/entities/acesso-usuario.entity';
+import { UsuarioAcesso } from '../../../domain/entities/usuario-acesso.entity';
+import { UsuarioPausa } from '../../../domain/entities/usuario-pausa.entity';
+import { UsuarioMultiAcesso } from '../../../domain/entities/usuario-multi-acesso.entity';
+import { PermissaoUsuarioXSubGrupo } from '../../../domain/entities/permissao-usuario-x-subgrupo.entity';
+import { GrupoAcessoUsuario } from '../../../domain/entities/grupo-acesso-usuario.entity';
 
 function mockRepository() {
   return {
