@@ -1,12 +1,14 @@
 import { ConnectionOptions } from 'typeorm';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 export default {
     type: 'mssql',
-    host: 'localhost',
-    port: 1433,
-    username: 'user_crm',
-    password: 'p@ssw0rd',
-    database: 'CRM',
+    host: process.env.DB_HOST,
+    port: parseInt(process.env.DB_PORT),
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
     entities: ["dist/**/*.entity{.ts,.js}"],
     synchronize: false,
     pool: {
